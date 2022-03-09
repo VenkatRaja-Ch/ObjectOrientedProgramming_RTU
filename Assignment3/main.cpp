@@ -1,6 +1,7 @@
 #include "Tour.h"
 #include "Inventory.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -30,29 +31,29 @@ int main ()
     inv.init();
     
     // add several different abstraction objects to the inventory
-    inv.add_item(1, "Expedia", "New York", 2999.00, "20.02.2022", "02.03.2022", true);
+    inv.add_item(1, "EXPEDIA", "New York", 2999.00, "20.02.2022", "02.03.2022", true);
     assert(1 == inv.get_count());
     
-    inv.add_item(2, "Baltic Travel", "Riga", 199.00, "20.09.2022", "25.09.2022", false);
+    inv.add_item(2, "BALTIC_TRAVEL", "Riga", 199.00, "20.09.2022", "25.09.2022", false);
     assert(2 == inv.get_count());
     
-    inv.add_item(3, "Go Travel", "India", 2000.00, "20.03.2023", "01.04.2023", true);
+    inv.add_item(3, "GO_TRAVEL", "India", 2000.00, "20.03.2023", "01.04.2023", true);
     assert(3 == inv.get_count());
     
-    inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", true);
+    inv.add_item(4, "EXPEDIA", "Jorden", 1799.00, "15.05.2022", "27.05.2022", true);
     assert(4 == inv.get_count());
     
     Tour qry;
     // provides querying values (some can be default (eg, "", 0) to denote unset criteria)
-    qry.init(3, "", "", 0.00, "", "", false);
+    qry.init(3, Tour::TourOrganiser::"", "", 0.00, "", "", false);
     show( inv.find_item(qry));
     
     // tests with different query values
-    qry.init(0, "Expedia", "", 0.00, "", "", false);
+    qry.init(0, "EXPEDIA", "", 0.00, "", "", false);
     show(inv.find_item(qry));
     
     // tests for nonmatching object
-    qry.init(0, "RandomOrganisation", "Unkown", 0.00, "-.-.-", "-.-.-", true);
+    qry.init(0, Tour::TourOrganiser::"", "Unkown", 0.00, "-.-.-", "-.-.-", true);
     show(inv.find_item(qry));
     
     return 0;

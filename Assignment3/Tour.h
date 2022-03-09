@@ -13,19 +13,28 @@ using namespace std;
 class Tour {
     
 public:
-    void init( int id, string organiser, string destination, double price, string startingDate, string endingDate, bool isInternational);
+    void init( int ids, Tour::TourOrganiser organiser, string destination, double price, string startingDate, string endingDate, bool isInternational); //added now
     
-    int get_tourID() { return _tourID; }
-    string get_tourOrganiser() { return _tourOrganiser; }
+    int get_tourID() { return _tourId; }
+    
+    //string get_tourOrganiser() { return _tourOrganiser; }
+    
+    enum class TourOrganiser {ANY, EXPEDIA, BALTIC_TRAVEL, GO_TRAVEL};
+    
     string get_tourDestination() { return _tourDestination; }
     double get_tourPrice() { return _tourPrice; }
     string get_tourStartingDate() { return _tourStartingDate; }
     string get_tourEndingDate() { return _tourEndingDate; }
     bool get_isTourInternational() { return _isTourInternational; }
+    
+    void init(int id, Tour::TourOrganiser organiser, string destination, double price, string startingDate, string endingDate, bool isTourInternational);
+    
+    Tour::TourOrganiser get_tourOrganiser() { return _tourOrganiser; }
 
 private:
-    int _tourID;
-    string _tourOrganiser;
+    Tour::TourOraganiser _tourOrganiser;
+    
+    int _tourId;
     string _tourDestination;
     double _tourPrice;
     string _tourStartingDate;

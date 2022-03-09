@@ -1,6 +1,7 @@
 #include "Tour.h"
 #include "Inventory.h"
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
