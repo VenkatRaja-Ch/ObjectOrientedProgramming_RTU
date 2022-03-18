@@ -16,8 +16,13 @@ public:
     // Returns stored abstraction object by its index or default object if index is invalid
     Tour get_item( size_t index ) { return (index < _count) ? _items[index] : Tour{}; }
     
+    
+    
     // From passed property values, creates and adds new abstraction object in an array _items
-    void add_item( int id, string organiser, string destination, double price, string startingDate, string endingDate, bool isInternational );
+    void add_item( int id, string organiser, string destination, double price, string startingDate, string endingDate, Tour::IsInternational isTourInternational );
+    
+    
+    
     
     // Look for a matching abstraction object and returns the first found or default object
     Tour find_item( Tour query );
