@@ -20,40 +20,31 @@ void Inventory::add_item( int id, string organiser, string destination, double p
     }
 }
 
-Tour Inventory::find_item( Tour query )
+Tour Inventory::find_item( const Tour & query )
 {
     for(size_t index = 0; index < _count; index++){
         
         // for integer and boolean type property
-        bool differentTourID = query.get_tourID()!=0 && query.get_tourID()!=_items[index].get_tourID();
+        bool differentTourID = query.get_tourID()!=0 &&   query.get_tourID()!=_items[index].get_tourID();
         bool differntTourPrice = query.get_tourPrice()!=0 && query.get_tourPrice()!=_items[index].get_tourPrice();
        
         
         
-        /*
-        bool differentIsTourInternational = query.get_isTourInternational()!=0 && query.get_isTourInternational()!=_items[index].get_isTourInternational();
-         */
-        
-        /*
-        if( query.get_isTourInternational()!="" && query.get_isTourInternational()!=_items[index].get_isTourInternational())
-            continue;
-        */
-        
         // for string type property
+        bool differentIsTourInternational =  query.get_isTourInternational()!=Tour::IsInternational::ANY && query.get_isTourInternational()!=_items[index].get_isTourInternational();
         bool differentTourOrganiser = query.get_tourOrganiser()!="" && query.get_tourOrganiser()!=_items[index].get_tourOrganiser();
         bool differentTourDestination = query.get_tourDestination()!="" && query.get_tourDestination()!=_items[index].get_tourDestination();
         bool differentStartingDate = query.get_tourStartingDate()!="" && query.get_tourStartingDate()!=_items[index].get_tourStartingDate();
         bool differentEndingDate = query.get_tourEndingDate()!="" && query.get_tourEndingDate()!=_items[index].get_tourEndingDate();
         
+        
         if(differentTourID)
             continue;
         if(differntTourPrice)
             continue;
-        /*
         if(differentIsTourInternational)
             continue;
-         */
-        
+
         if(differentTourOrganiser)
             continue;
         if(differentTourDestination)

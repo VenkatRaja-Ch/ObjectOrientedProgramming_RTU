@@ -19,15 +19,15 @@ public:
     
     void init( int id, string organiser, string destination, double price, string startingDate, string endingDate, Tour::IsInternational isTourInternational);
     
-    int get_tourID() { return _tourID; }
-    string get_tourOrganiser() { return _tourOrganiser; }
-    string get_tourDestination() { return _tourDestination; }
-    double get_tourPrice() { return _tourPrice; }
-    string get_tourStartingDate() { return _tourStartingDate; }
-    string get_tourEndingDate() { return _tourEndingDate; }
+    int get_tourID() const { return _tourID; }
+    string get_tourOrganiser() const { return _tourOrganiser; }
+    string get_tourDestination() const { return _tourDestination; }
+    double get_tourPrice() const { return _tourPrice; }
+    string get_tourStartingDate() const { return _tourStartingDate; }
+    string get_tourEndingDate() const { return _tourEndingDate; }
 
     
-    Tour::IsInternational get_isTourInternational() { return _isTourInternational; }
+    Tour::IsInternational get_isTourInternational() const { return _isTourInternational; }
     
 private:
     int _tourID;

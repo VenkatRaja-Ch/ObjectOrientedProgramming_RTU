@@ -5,10 +5,13 @@
 
 using namespace std;
 
-
+  
 // outputs abstraction object properties to the console window
 void show( Tour item )
 {
+    
+    static const char* TYPE_S[]{ "ANY" "YES" "NO" };
+    
     cout << "========================================" << endl;
     cout << endl;
     cout << "Tour id: " << item.get_tourID() << endl;
@@ -16,8 +19,7 @@ void show( Tour item )
     cout << "Tour Destination: " << item.get_tourDestination() << endl;
     cout << "Tour Startind date: " << item.get_tourStartingDate() << endl;
     cout << "Tour Ending date: " << item.get_tourEndingDate() << endl;
-    auto tourInternational = item.get_isTourInternational();
-    cout << "Tour is international: " << tourInternational << endl;
+    cout << "Tour is international: " << TYPE_S[(size_t)item.get_isTourInternational()]  << endl;
     cout << "Tour Price: " << item.get_tourPrice() << endl;
     cout << endl;
     cout << "========================================" << endl;
@@ -46,15 +48,15 @@ int main ()
     
     Tour qry;
     // provides querying values (some can be default (eg, "", 0) to denote unset criteria)
-    qry.init(3, "", "", 0.00, "", "", false);
+    qry.init(3, "", "", 0.00, "", "", Tour::IsInternational::NO);
     show( inv.find_item(qry));
     
     // tests with different query values
-    qry.init(0, "Expedia", "", 0.00, "", "", false);
+    qry.init(0, "Expedia", "", 0.00, "", "", Tour::IsInternational::YES);
     show(inv.find_item(qry));
     
     // tests for nonmatching object
-    qry.init(0, "RandomOrganisation", "Unkown", 0.00, "-.-.-", "-.-.-", true);
+    qry.init(0, "RandomOrganisation", "Unkown", 0.00, "-.-.-", "-.-.-", Tour::IsInternational::ANY);
     show(inv.find_item(qry));
     
     return 0;
