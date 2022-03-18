@@ -11,5 +11,6 @@ void::Tour::init(int id, string organiser, string destination, double price, str
     _tourPrice = price;
     _tourStartingDate = startingDate;
     _tourEndingDate = endingDate;
+    _isTourInternational = isTourInternational;
 }
  

@@ -11,10 +11,10 @@ public:
     void init() { _count = 0; }
     
     // Returns the current number of abstraction objects
-    size_t get_count() { return _count; }
+    size_t get_count() const { return _count; }
     
     // Returns stored abstraction object by its index or default object if index is invalid
-    Tour get_item( size_t index ) { return (index < _count) ? _items[index] : Tour{}; }
+    Tour get_item( size_t index ) const { return (index < _count) ? _items[index] : Tour{}; }
     
     
     
@@ -24,7 +24,7 @@ public:
     
     
     // Look for a matching abstraction object and returns the first found or default object
-    Tour find_item(const Tour & query );
+    Tour find_item(const Tour & query ) const;
     
 private:
     // the maximum number of abstraction object that can be stored
