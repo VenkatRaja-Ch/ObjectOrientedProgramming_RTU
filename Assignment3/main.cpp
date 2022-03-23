@@ -30,6 +30,46 @@ void show(const Tour & item )
     cout << endl;
 }
 
+// Task: 08
+Tour max_pricedTour( const Inventory & inv )
+{
+    
+    size_t inventorySize = inv.get_count();
+    double maxPrice = ( (inv.get_item(0)).get_tourPrice() );
+    double currentPricedElement, maxPricedElementIndex = 0;
+    
+    for (int index=0; index<inventorySize; index++) {
+        
+        currentPricedElement = ( inv.get_item(index).get_tourPrice() );
+        if( currentPricedElement >= maxPrice ){
+            
+            maxPrice = currentPricedElement;
+            maxPricedElementIndex = index;
+        }
+    }
+    
+    
+    return inv.get_item(maxPricedElementIndex);
+}
+
+
+// Task: 09
+double avg_priceOfTour( const Inventory & inv)
+{
+    size_t inventorySize = inv.get_count();
+    double averageTourPrice, currentTourPrice, sumOfAllTourPrice = 0;
+    
+    for (int index=0; index<inventorySize; index++) {
+        currentTourPrice = inv.get_item(index).get_tourPrice();
+        sumOfAllTourPrice += currentTourPrice;
+    }
+    
+    averageTourPrice = ( sumOfAllTourPrice / inventorySize );
+    
+    return averageTourPrice;
+}
+
+
 // solution entry function
 int main ()
 {
@@ -62,6 +102,15 @@ int main ()
     // tests for nonmatching object
     qry.init(0, "RandomOrganisation", "Unkown", 0.00, "-.-.-", "-.-.-", Tour::IsInternational::ANY);
     show(inv.find_item(qry));
+    
+    
+    // Task 8:
+    cout << "\n\nTask: 08\nMost Expensive Tour Package: \n";
+    show( max_pricedTour(inv) );
+    
+    // Task 9:
+    cout << "\n\nTask: 09\n";
+    cout << "Average Tour Price: " << avg_priceOfTour(inv) << endl;
     
     return 0;
 }
