@@ -15,7 +15,9 @@ void Inventory::add_item( int id, string organiser, string destination, double p
 
         Tour new_item;
         new_item.init( id, organiser, destination, price, startingDate,endingDate, isTourInternational );
+        
         bool itemNotFound = (find_item(new_item).get_tourID() != id);
+        
         if(itemNotFound)
         {
             _items[_count] = new_item;
