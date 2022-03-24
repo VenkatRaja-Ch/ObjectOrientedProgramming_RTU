@@ -1,8 +1,4 @@
-/*
- 
- To be checked int the find_item.....
- 
- */
+// Assignment: 3
 
 #include "Inventory.h"
 
@@ -16,13 +12,18 @@ void Inventory::add_item( int id, string organiser, string destination, double p
         Tour new_item;
         new_item.init( id, organiser, destination, price, startingDate,endingDate, isTourInternational );
         
-        bool itemNotFound = (find_item(new_item).get_tourID() != id);
         
-        if(itemNotFound)
-        {
-            _items[_count] = new_item;
-            _count ++;
-        }
+        // Task: 10
+        bool itemNotFound = (find_item(new_item).get_tourID() != id);
+        assert(1 == itemNotFound);
+        _items[_count] = new_item;
+        _count ++;
+        
+//        if(itemNotFound)
+//        {
+//            _items[_count] = new_item;
+//            _count++;
+//        }
     }
 }
 

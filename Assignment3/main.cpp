@@ -1,3 +1,5 @@
+// Assignment: 3
+
 #include "Tour.h"
 #include "Inventory.h"
 #include <iostream>
@@ -89,6 +91,17 @@ int main ()
     
     inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", Tour::IsInternational::YES);
     assert(4 == inv.get_count());
+    
+    
+    
+    // Task 10: When same file is add, then it terminates the program since the item is already added in the datatbase.
+    // uncomment the code to check the working of the task
+    // trying to add a existing item
+//    inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", Tour::IsInternational::YES);
+//    assert(5 == inv.get_count());
+    
+    
+    
     
     Tour qry;
     // provides querying values (some can be default (eg, "", 0) to denote unset criteria)
