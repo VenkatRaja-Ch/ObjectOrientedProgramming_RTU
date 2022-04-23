@@ -1,24 +1,28 @@
-// Assignment: 3
+// Assignment: 4
 
 #include "Inventory.h"
 
 // The parameters must match with the class declaration
-void Inventory::add_item( int id, string organiser, string destination, double price, string startingDate, string endingDate, Tour::IsInternational isTourInternational )
+void Inventory::add_item( unsigned id, string organiser, string destination, double price, string startingDate, string endingDate, const  TourSpec & spec ) 
 {
     
     if (_count < Inventory::MAX_SIZE)
     {
 
-        Tour new_item;
-        new_item.init( id, organiser, destination, price, startingDate,endingDate, isTourInternational );
+        Tour new_item ( id, organiser, destination, price, startingDate,endingDate, spec );
+        Tour found = find_item(new_item);
         
-        
-        // Task: 10
-        bool sameItemFound = (id != find_item(new_item).get_tourID()) && (isTourInternational != new_item.get_isTourInternational());
-        assert(0 == sameItemFound);
+        // Assignment:03 - Task: 10
+        bool itemNotFound = (id != found.get_tourID()) && (spec.get_isTourInternational() != found.get_tourSpec().get_isTourInternational());
+        assert(1 == itemNotFound);
         _items[_count] = new_item;
         _count ++;
-
+        
+//        if(itemNotFound)
+//        {
+//            _items[_count] = new_item;
+//            _count++;
+//        }
     }
 }
 
@@ -31,11 +35,13 @@ Tour Inventory::find_item( const Tour & query ) const
         
         
         constexpr double epsil{ 0.005 };
+        //bool differentTourPrice = query.get_tourPrice()!=0.0 && query.get_tourPrice()!=_items[index].get_tourPrice();
         bool differentTourPrice = ( (query.get_tourPrice()!=0.0) && (epsil < abs(query.get_tourPrice() - _items[index].get_tourPrice())) );
         
         
         // for string type property
-        bool differentIsTourInternational = ( (query.get_isTourInternational() != Tour::IsInternational::ANY) && (query.get_isTourInternational() != _items[index].get_isTourInternational()) );
+        bool differentIsTourInternational = ( (query.get_tourSpec().get_isTourInternational() != TourSpec::IsInternational::ANY)
+                                             && (query.get_tourSpec().get_isTourInternational() != _items[index].get_tourSpec().get_isTourInternational()));
        
         bool differentTourOrganiser = query.get_tourOrganiser()!="" && query.get_tourOrganiser()!=_items[index].get_tourOrganiser();
         
@@ -60,6 +66,24 @@ Tour Inventory::find_item( const Tour & query ) const
         if(differentStartingDate)
             continue;
         if(differentEndingDate)
+            continue;
+
+        return _items[index];
+    }
+    
+    return Tour{};
+}
+
+
+Tour Inventory::find_item( const TourSpec & query ) const
+{
+    for(size_t index = 0; index < _count; index++){
+        
+        // for string type property
+        bool differentIsTourInternational = ( (query.get_isTourInternational() != TourSpec::IsInternational::ANY)
+                                             && (query.get_isTourInternational() != _items[index].get_tourSpec().get_isTourInternational()));
+       
+        if(differentIsTourInternational)
             continue;
 
         return _items[index];

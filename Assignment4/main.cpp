@@ -1,4 +1,4 @@
-// Assignment: 3
+// Assignment: 4
 
 #include "Tour.h"
 #include "Inventory.h"
@@ -12,8 +12,6 @@ using namespace std;
 void show(const Tour & item )
 {
     
-    static const char* IS_TOUR_INTERNATIONAL_S[]{ "ANY", "YES", "NO" };
-    
     cout << "========================================" << endl;
     cout << endl;
     cout << "Tour id: " << item.get_tourID() << endl;
@@ -23,7 +21,7 @@ void show(const Tour & item )
     cout << "Tour Ending date: " << item.get_tourEndingDate() << endl;
     
     
-    cout << "Tour is international: " << IS_TOUR_INTERNATIONAL_S[(size_t)item.get_isTourInternational()] << endl;
+    cout << "Tour is international: " << item.get_tourSpec().get_isTourInternational_as_String () << endl;
     
     
     cout << "Tour Price: " << item.get_tourPrice() << endl;
@@ -32,7 +30,7 @@ void show(const Tour & item )
     cout << endl;
 }
 
-// Task: 08
+// Assignment:03 -     Task: 08
 Tour max_pricedTour( const Inventory & inv )
 {
     
@@ -45,8 +43,8 @@ Tour max_pricedTour( const Inventory & inv )
         currentPricedElement = ( inv.get_item(index).get_tourPrice() );
         if( currentPricedElement >= maxPrice ){
             
-            maxPrice = currentPricedElement;
-            maxPricedElementIndex = index;
+            maxPrice = currentPricedElement;    // storing the maximum price
+            maxPricedElementIndex = index;      // storing index position at which maximum priced element is placed
         }
     }
     
@@ -55,7 +53,7 @@ Tour max_pricedTour( const Inventory & inv )
 }
 
 
-// Task: 09
+// Assignment:03 - Task: 09
 double avg_priceOfTour( const Inventory & inv)
 {
     size_t inventorySize = inv.get_count();
@@ -77,58 +75,58 @@ int main ()
 {
     Inventory inv;
     
-    inv.init();
+    
+    TourSpec tourSpec1(TourSpec::IsInternational::YES);
+    
     
     // add several different abstraction objects to the inventory
-    inv.add_item(1, "Expedia", "New York", 2999.00, "20.02.2022", "02.03.2022", Tour::IsInternational::YES);
+    inv.add_item(1, "Expedia", "New York", 2999.00, "20.02.2022", "02.03.2022", tourSpec1);
     assert(1 == inv.get_count());
-    
-    inv.add_item(2, "Baltic Travel", "Riga", 199.00, "20.09.2022", "25.09.2022", Tour::IsInternational::NO);
+
+    inv.add_item(2, "Baltic Travel", "Riga", 199.00, "20.09.2022", "25.09.2022", TourSpec(TourSpec::IsInternational::NO));
     assert(2 == inv.get_count());
     
-    inv.add_item(3, "Go Travel", "India", 2000.00, "20.03.2023", "01.04.2023", Tour::IsInternational::YES);
+    inv.add_item(3, "Go Travel", "India", 2000.00, "20.03.2023", "01.04.2023", tourSpec1);
     assert(3 == inv.get_count());
     
-    inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", Tour::IsInternational::YES);
+    inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", tourSpec1);
     assert(4 == inv.get_count());
     
     
     
-    // Task 10: When same file is add, then it terminates the program since the item is already added in the datatbase.
+    // Assignment:03 - Task 10: When same file is add, then it terminates the program since the item is already added in the datatbase.
     // uncomment the code to check the working of the task
     // trying to add a existing item
-    //inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", Tour::IsInternational::YES);
-    
-    inv.add_item(5, "TourABC", "Miami", 2599.99, "25.07.2022", "02.08.2022", Tour::IsInternational::YES);
-    assert(5 == inv.get_count());
+//    inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", Tour::IsInternational::YES);
+//    assert(5 == inv.get_count());
     
     
-    Tour qry;
+    // Assignment:4 - Task 4
     // provides querying values (some can be default (eg, "", 0) to denote unset criteria)
-    qry.init(3, "", "", 0.00, "", "", Tour::IsInternational::YES);
-    show( inv.find_item(qry));
+    Tour qry0(3, "", "", 0.00, "", "", TourSpec(TourSpec::IsInternational::YES));
+    show( inv.find_item( qry0 ));
     
     // tests with different query values
-    qry.init(0, "Expedia", "", 0.00, "", "", Tour::IsInternational::YES);
-    show(inv.find_item(qry));
+    Tour qry1(0, "Expedia", "", 0.00, "", "", TourSpec(TourSpec::IsInternational::YES));
+    show(inv.find_item( qry1 ));
+    
+    
+    // testing for overloading
+    cout << "\n\nTesting for Fucntion Overloding\n";
+    show(inv.find_item( TourSpec( TourSpec::IsInternational::YES )));
+    
     
     // tests for nonmatching object
-    qry.init(0, "RandomOrganisation", "Unkown", 0.00, "-.-.-", "-.-.-", Tour::IsInternational::ANY);
-    show(inv.find_item(qry));
+    Tour qry2(0, "RandomOrganisation", "Unkown", 0.00, "-.-.-", "-.-.-", TourSpec(TourSpec::IsInternational::ANY));
+    show(inv.find_item( qry2 ));
     
     
-    // Task 8:
-    cout << "\n\nTask: 08\nMost Expensive Tour Package: \n";
+    cout << "\n\nMost Expensive Tour Package: \n";
     show( max_pricedTour(inv) );
-    assert(2999 == max_pricedTour(inv).get_tourPrice());
+    const double epsil { 0.005 };
+    assert( epsil < (5000 - max_pricedTour(inv).get_tourPrice()));
     
-    // Task 9:
-    cout << "\n\nTask: 09\n";
     cout << "Average Tour Price: " << avg_priceOfTour(inv) << endl;
-    constexpr double epsil {0.005};
-    //bool differentTourPrice = ( (query.get_tourPrice()!=0.0) && (epsil < abs(query.get_tourPrice() - _items[index].get_tourPrice())) );
-    bool validAveragePrice = avg_priceOfTour(inv)!=0.0 && epsil < abs(avg_priceOfTour(inv));
-    assert ( 1 == validAveragePrice );
     
     return 0;
 }

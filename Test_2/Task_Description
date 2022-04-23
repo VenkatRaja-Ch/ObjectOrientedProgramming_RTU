@@ -1,0 +1,24 @@
+OBJECT ORIENTED PROGRAMMING
+Spring 2022
+QUIZ - 2
+
+Use provided source code files as input and implement a new class in the
+provided files Cylinder.h/.cpp for the cylinder that satisfies the following
+requirements:
+    1. The name of the class is Cylinder.
+    2. The encapsulated state of the class is defined either (choose only one, however, the 2nd option will be evaluated higher):
+        i. by the height and the radius; or
+        ii. by the height and the instance of the given class Circle as a base.
+    3. Ensure that the only way to construct the instance of the class Cylinder is by providing its height and radius as floating-point values.
+    4. It should not be allowed to change these values once the instance of the class Cylinder has been constructed. The class should, however, provide the functions to retrieve the current values of height and radius.
+    5. The class behavior should implement functions that return the volume (𝜋𝑟2ℎ), base area (𝜋𝑟 2), lateral area (2𝜋𝑟ℎ) and a total surface area of the cylinder object. (For calculation of the total surface area reuse the functions for calculation of the base and the lateral surface area.)
+
+NOTE 1: If you selected option 2.ii., then in task 4 and 5 you should try to reuse already existing behavior of the class Circle (i.e., via the member variable b).
+NOTE 2: Functions in the task 5 must only calculate and return the result. They should not store or ‘print’ the calculated value. Try to finish the class Cylinder declaration and/or definitions of functions so that by uncommenting assert statements of the test file tests.cpp, the C++ program compilation succeeds and during the run-time there is no output regarding invalid assert values and the only output message is OK. At the end submit only updated source code of the class Cylinder, i.e., file(s) Cylinder.h/.cpp. (If other files are changed or submitted they will be ignored.)
+
+
+STATUS:
+    -> The code is partially correct, but missed few concepts in my solution.
+    -> Professor's solution could be used as a reference, for the task to avoid
+    -> Marks secured for this practical is: 03/10
+    -> Remarks for this practical is said: "The code is similar to the other student's work."
