@@ -1,9 +1,11 @@
 // Assignment: 3
 
 #include "Inventory.h"
+#include <cassert>
+#include <cmath>
 
 // The parameters must match with the class declaration
-void Inventory::add_item( int id, string organiser, string destination, double price, string startingDate, string endingDate, Tour::IsInternational isTourInternational )
+void Inventory::add_item( int id, const string & organiser, const string & destination, double price, const string & startingDate, const string & endingDate, Tour::IsInternational isTourInternational )
 {
     
     if (_count < Inventory::MAX_SIZE)
@@ -14,8 +16,9 @@ void Inventory::add_item( int id, string organiser, string destination, double p
         
         
         // Task: 10
-        bool sameItemFound = (id != find_item(new_item).get_tourID()) && (isTourInternational != new_item.get_isTourInternational());
-        assert(0 == sameItemFound);
+        Tour inventory_item = find_item(new_item);
+        bool sameItemFound = (id != inventory_item.get_tourID()) && (isTourInternational != inventory_item.get_isTourInternational());
+        assert(1 == sameItemFound);
         _items[_count] = new_item;
         _count ++;
 

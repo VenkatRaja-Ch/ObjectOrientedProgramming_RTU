@@ -4,6 +4,7 @@
 #include "Inventory.h"
 #include <iostream>
 #include <cassert>
+#include <cmath>
 
 using namespace std;
 
@@ -26,7 +27,7 @@ void show(const Tour & item )
     cout << "Tour is international: " << IS_TOUR_INTERNATIONAL_S[(size_t)item.get_isTourInternational()] << endl;
     
     
-    cout << "Tour Price: " << item.get_tourPrice() << endl;
+    cout << "Tour Price: " << item.get_tourPrice() << " EUR" << endl;
     cout << endl;
     cout << "========================================" << endl;
     cout << endl;
@@ -97,7 +98,8 @@ int main ()
     // Task 10: When same file is add, then it terminates the program since the item is already added in the datatbase.
     // uncomment the code to check the working of the task
     // trying to add a existing item
-    //inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", Tour::IsInternational::YES);
+//    inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", Tour::IsInternational::YES);
+//    assert(4 == inv.get_count());
     
     inv.add_item(5, "TourABC", "Miami", 2599.99, "25.07.2022", "02.08.2022", Tour::IsInternational::YES);
     assert(5 == inv.get_count());
@@ -105,10 +107,10 @@ int main ()
     
     Tour qry;
     // provides querying values (some can be default (eg, "", 0) to denote unset criteria)
-    qry.init(3, "", "", 0.00, "", "", Tour::IsInternational::YES);
+    qry.init(3, "", "", 0.00, "", "", Tour::IsInternational::ANY);
     show( inv.find_item(qry));
     
-    // tests with different query values
+    // tests with different query values for Tour agency Expedia
     qry.init(0, "Expedia", "", 0.00, "", "", Tour::IsInternational::YES);
     show(inv.find_item(qry));
     
@@ -119,16 +121,18 @@ int main ()
     
     // Task 8:
     cout << "\n\nTask: 08\nMost Expensive Tour Package: \n";
+    constexpr double epsil {0.005};
+    bool correctMaxTourPrice = (max_pricedTour(inv).get_tourPrice()!=0.0) && (epsil < abs((2999*epsil) - max_pricedTour(inv).get_tourPrice() ));
+    assert(1 == correctMaxTourPrice);
     show( max_pricedTour(inv) );
-    assert(2999 == max_pricedTour(inv).get_tourPrice());
+    
+    
     
     // Task 9:
     cout << "\n\nTask: 09\n";
     cout << "Average Tour Price: " << avg_priceOfTour(inv) << endl;
-    constexpr double epsil {0.005};
-    //bool differentTourPrice = ( (query.get_tourPrice()!=0.0) && (epsil < abs(query.get_tourPrice() - _items[index].get_tourPrice())) );
-    bool validAveragePrice = avg_priceOfTour(inv)!=0.0 && epsil < abs(avg_priceOfTour(inv));
-    assert ( 1 == validAveragePrice );
+    bool correctAveragePrice = (avg_priceOfTour(inv)!=0.0) && (epsil < abs((1919.4*epsil) - avg_priceOfTour(inv)));
+    assert ( 1 == correctAveragePrice );
     
     return 0;
 }

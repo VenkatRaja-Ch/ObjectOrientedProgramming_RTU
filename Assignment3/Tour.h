@@ -10,7 +10,7 @@ using namespace std;
 // Student Name: Venkat Raja Ch
 // Student ID: 201ADB022
 // abstraction: Tour
-// propertied which could be abstracted: id, Organiser, Starting date, Ending date, Destination, Price
+// propertied which could be abstracted: id (integer) , Organiser (string), Starting date(string), Ending date(string), Destination (string), Price (double)
 
 class Tour {
     

@@ -21,7 +21,7 @@ public:
     
     
     // From passed property values, creates and adds new abstraction object in an array _items
-    void add_item( int id, string organiser, string destination, double price, string startingDate, string endingDate, Tour::IsInternational isTourInternational );
+    void add_item( int id, const string & organiser, const string & destination, double price, const string & startingDate, const string & endingDate, Tour::IsInternational isTourInternational );
 
     
     
