@@ -4,6 +4,7 @@
 #include "Inventory.h"
 #include <iostream>
 #include <cassert>
+#include <cmath>
 
 using namespace std;
 
@@ -16,15 +17,11 @@ void show(const Tour & item )
     cout << endl;
     cout << "Tour id: " << item.get_tourID() << endl;
     cout << "Tour Organiser: " << item.get_tourOrganiser() << endl;
-    cout << "Tour Destination: " << item.get_tourDestination() << endl;
-    cout << "Tour Startind date: " << item.get_tourStartingDate() << endl;
-    cout << "Tour Ending date: " << item.get_tourEndingDate() << endl;
-    
-    
-    cout << "Tour is international: " << item.get_tourSpec().get_isTourInternational_as_String () << endl;
-    
-    
-    cout << "Tour Price: " << item.get_tourPrice() << endl;
+    cout << "Tour Destination: " << item.get_tourSpec().get_tourDestination() << endl;
+    cout << "Tour Startind date: " << item.get_tourSpec().get_tourStartingDate() << endl;
+    cout << "Tour Ending date: " << item.get_tourSpec().get_tourEndingDate() << endl;
+    cout << "Tour is international: " << item.get_tourSpec().get_isTourInternational_as_String() << endl;
+    cout << "Tour Price: " << item.get_tourSpec().get_tourPrice() << endl;
     cout << endl;
     cout << "========================================" << endl;
     cout << endl;
@@ -33,14 +30,13 @@ void show(const Tour & item )
 // Assignment:03 -     Task: 08
 Tour max_pricedTour( const Inventory & inv )
 {
-    
     size_t inventorySize = inv.get_count();
-    double maxPrice = ( (inv.get_item(0)).get_tourPrice() );
+    double maxPrice = ( (inv.get_item(0)).get_tourSpec().get_tourPrice() );
     double currentPricedElement, maxPricedElementIndex = 0;
     
     for (int index=0; index<inventorySize; index++) {
         
-        currentPricedElement = ( inv.get_item(index).get_tourPrice() );
+        currentPricedElement = ( inv.get_item(index).get_tourSpec().get_tourPrice() );
         if( currentPricedElement >= maxPrice ){
             
             maxPrice = currentPricedElement;    // storing the maximum price
@@ -60,7 +56,7 @@ double avg_priceOfTour( const Inventory & inv)
     double averageTourPrice, currentTourPrice, sumOfAllTourPrice = 0;
     
     for (int index=0; index<inventorySize; index++) {
-        currentTourPrice = inv.get_item(index).get_tourPrice();
+        currentTourPrice = inv.get_item(index).get_tourSpec().get_tourPrice();
         sumOfAllTourPrice += currentTourPrice;
     }
     
@@ -75,58 +71,70 @@ int main ()
 {
     Inventory inv;
     
-    
-    TourSpec tourSpec1(TourSpec::IsInternational::YES);
-    
+    // TourSpec object for Internation Trip of Jorden
+    TourSpec jordenTour {TourSpec::IsInternational::YES, 1799.99, "Jorden", "15.05.2022", "27.05.2022" };
     
     // add several different abstraction objects to the inventory
-    inv.add_item(1, "Expedia", "New York", 2999.00, "20.02.2022", "02.03.2022", tourSpec1);
+    inv.add_item(1, "Expedia", TourSpec{TourSpec::IsInternational::YES,2999.99,"New York","20.02.2022","02.03.2022"});
     assert(1 == inv.get_count());
-
-    inv.add_item(2, "Baltic Travel", "Riga", 199.00, "20.09.2022", "25.09.2022", TourSpec(TourSpec::IsInternational::NO));
+    
+    inv.add_item(2, "Baltic Travel", TourSpec{TourSpec::IsInternational::NO,199.99,"Riga","20.09.2022","25.09.2022"});
     assert(2 == inv.get_count());
-    
-    inv.add_item(3, "Go Travel", "India", 2000.00, "20.03.2023", "01.04.2023", tourSpec1);
+
+    inv.add_item(3, "Go Travel", TourSpec{TourSpec::IsInternational::YES,2000.99,"India","20.03.2023","01.04.2023"});
     assert(3 == inv.get_count());
-    
-    inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", tourSpec1);
+
+    // adding the TourSpec object directly
+    inv.add_item(4, "Expedia", jordenTour);
     assert(4 == inv.get_count());
-    
-    
     
     // Assignment:03 - Task 10: When same file is add, then it terminates the program since the item is already added in the datatbase.
     // uncomment the code to check the working of the task
     // trying to add a existing item
 //    inv.add_item(4, "Expedia", "Jorden", 1799.00, "15.05.2022", "27.05.2022", Tour::IsInternational::YES);
-//    assert(5 == inv.get_count());
     
     
     // Assignment:4 - Task 4
     // provides querying values (some can be default (eg, "", 0) to denote unset criteria)
-    Tour qry0(3, "", "", 0.00, "", "", TourSpec(TourSpec::IsInternational::YES));
+    Tour qry0(3, "",TourSpec(TourSpec::IsInternational::YES,0.0,"","",""));
     show( inv.find_item( qry0 ));
     
     // tests with different query values
-    Tour qry1(0, "Expedia", "", 0.00, "", "", TourSpec(TourSpec::IsInternational::YES));
+    Tour qry1(0, "Expedia", TourSpec(TourSpec::IsInternational::YES,0.0,"","",""));
     show(inv.find_item( qry1 ));
     
     
-    // testing for overloading
-    cout << "\n\nTesting for Fucntion Overloding\n";
-    show(inv.find_item( TourSpec( TourSpec::IsInternational::YES )));
-    
-    
     // tests for nonmatching object
-    Tour qry2(0, "RandomOrganisation", "Unkown", 0.00, "-.-.-", "-.-.-", TourSpec(TourSpec::IsInternational::ANY));
+    Tour qry2(0, "RandomOrganisation", TourSpec(TourSpec::IsInternational::ANY,0.0,"Unkown","-.-.-","-.-.-"));
     show(inv.find_item( qry2 ));
     
     
+    // Most Expensive Tour Package ( to test function max_pricedTour() )
     cout << "\n\nMost Expensive Tour Package: \n";
     show( max_pricedTour(inv) );
-    const double epsil { 0.005 };
-    assert( epsil < (5000 - max_pricedTour(inv).get_tourPrice()));
+    constexpr double epsil { 0.005 };
+    assert( epsil < abs((2999.99*epsil) - max_pricedTour(inv).get_tourSpec().get_tourPrice()));
     
+    // Average price for Tour Packages ( to test function avg_priceOfTour() )
+    assert( epsil < abs((1750.23*epsil) - avg_priceOfTour(inv) ));
     cout << "Average Tour Price: " << avg_priceOfTour(inv) << endl;
+    
+    
+    cout << "\n\nOverloading Part:" << endl;
+    show(inv.find_item(jordenTour));
+    
+    
+    cout << "\n\nAdding another Jorden Tour with different Organiser" << endl;
+    inv.add_item(5, "Across The Globe Travels", jordenTour);
+    cout << "<-- With default value in Tour object -->" << endl;
+    Tour qry3(0, "", jordenTour);
+    show(inv.find_item(qry3));
+    show(inv.find_item(jordenTour));
+    
+    cout << "<-- Without default value in Tour object -->" << endl;
+    Tour qry4(5, "", jordenTour);
+    show(inv.find_item(qry4));
+    show(inv.find_item(jordenTour));
     
     return 0;
 }

@@ -21,13 +21,15 @@ public:
     
     
     // From passed property values, creates and adds new abstraction object in an array _items
-    void add_item( unsigned id, string organiser, string destination, double price, string startingDate, string endingDate, const TourSpec & spec ); 
+    void add_item( unsigned id, const string &organiser, const TourSpec & spec);
 
     
     
     // Look for a matching abstraction object and returns the first found or default object
     Tour find_item(const Tour & query ) const;
-    Tour find_item(const TourSpec & query ) const;
+    
+    // for function overloading part
+    Tour find_item(const TourSpec & spec_query ) const;
     
 private:
     // the maximum number of abstraction object that can be stored

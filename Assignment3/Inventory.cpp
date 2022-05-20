@@ -18,7 +18,7 @@ void Inventory::add_item( int id, const string & organiser, const string & desti
         // Task: 10
         Tour inventory_item = find_item(new_item);
         bool sameItemFound = (id != inventory_item.get_tourID()) && (isTourInternational != inventory_item.get_isTourInternational());
-        assert(1 == sameItemFound);
+        assert(1 == sameItemFound); // if same item found then the program exits through the assert statement
         _items[_count] = new_item;
         _count ++;
 
