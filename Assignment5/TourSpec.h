@@ -16,13 +16,14 @@ public:
     TourSpec() = default;
     
     // object's parameterized constructor
-    TourSpec(IsInternational isTourInternational, double price, string destination, string startingDate, string endingDate)
+    TourSpec(IsInternational isTourInternational, double price, string destination, string startingDate, string endingDate, unsigned int duration)
     :
         _isTourInternational { isTourInternational },
         _tourPrice{ price },
         _tourDestination{ destination },
         _tourStartingDate{ startingDate },
-        _tourEndingDate{ endingDate } {}
+        _tourEndingDate{ endingDate },
+        _duration{ duration } {}
     
     // getter functions
     IsInternational get_isTourInternational() const { return _isTourInternational; }
@@ -30,8 +31,9 @@ public:
     string get_tourDestination() const { return _tourDestination; }
     string get_tourStartingDate() const { return _tourStartingDate; }
     string get_tourEndingDate() const { return _tourEndingDate; }
+    unsigned int get_tourDuration() const { return _duration; }
     
-    bool matches( const TourSpec & otherSpec ) const; 
+    bool matches( const TourSpec & otherSpec ) const;
     
     // another C++ idiom to return an enumeration value as a string
     const std::string & get_isTourInternational_as_String () const {
@@ -44,6 +46,9 @@ private:
     string _tourDestination;
     string _tourStartingDate;
     string _tourEndingDate;
+    
+    unsigned int _duration;
+     
     IsInternational _isTourInternational;
 };
 

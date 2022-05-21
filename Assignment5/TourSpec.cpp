@@ -22,6 +22,7 @@ bool TourSpec::matches(const TourSpec &otherSpec) const
     
     bool differentEndingDate = otherSpec.get_tourEndingDate()!="" && otherSpec.get_tourEndingDate()!=get_tourEndingDate();
     
+    bool differentTourDuration = otherSpec.get_tourDuration()!=0 &&   otherSpec.get_tourDuration()!=get_tourDuration();
 
     if(differentTourPrice)
         return false;
@@ -34,6 +35,8 @@ bool TourSpec::matches(const TourSpec &otherSpec) const
     if(differentStartingDate)
         return false;
     if(differentEndingDate)
+        return false;
+    if(differentTourDuration)
         return false;
     
     return true;

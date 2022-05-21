@@ -29,6 +29,7 @@ void show(const Tour & item )
         cout << "Tour Ending date: " << is_pointer_pointing -> get_tourEndingDate() << endl;
         cout << "Tour is international: " << is_pointer_pointing -> get_isTourInternational_as_String() << endl;
         cout << "Tour Price: " << is_pointer_pointing -> get_tourPrice() << endl;
+        cout << "Tour Duration: " << is_pointer_pointing -> get_tourDuration() << " Days" << endl;
     }
     
     cout << endl;
@@ -82,16 +83,16 @@ int main ()
     
     // TourSpec object for Internation Trip of Jorden
     
-    auto jordenTour{ make_shared<TourSpec>(TourSpec::IsInternational::YES, 1799.99, "Jorden", "15.05.2022", "27.05.2022") };
+    auto jordenTour{ make_shared<TourSpec>(TourSpec::IsInternational::YES, 1799.99, "Jorden", "15.05.2022", "27.05.2022",12) };
     
     // add several different abstraction objects to the inventory
-    inv.add_item(1, "Expedia", make_shared <TourSpec> (TourSpec::IsInternational::YES,2999.99,"New York","20.02.2022","02.03.2022"));
+    inv.add_item(1, "Expedia", make_shared <TourSpec> (TourSpec::IsInternational::YES,2999.99,"New York","20.02.2022","02.03.2022",10));
     assert(1 == inv.get_count());
     
-    inv.add_item(2, "Baltic Travel", make_shared <TourSpec> (TourSpec::IsInternational::NO,199.99,"Riga","20.09.2022","25.09.2022"));
+    inv.add_item(2, "Baltic Travel", make_shared <TourSpec> (TourSpec::IsInternational::NO,199.99,"Riga","20.09.2022","25.09.2022",5));
     assert(2 == inv.get_count());
 
-    inv.add_item(3, "Go Travel", make_shared  <TourSpec> (TourSpec::IsInternational::YES,2000.99,"India","20.03.2023","01.04.2023"));
+    inv.add_item(3, "Go Travel", make_shared  <TourSpec> (TourSpec::IsInternational::YES,2000.99,"India","20.03.2023","01.04.2023", 12));
     assert(3 == inv.get_count());
 
     // adding the TourSpec object directly
@@ -105,16 +106,16 @@ int main ()
     
     // Assignment:4 - Task 4
     // provides querying values (some can be default (eg, "", 0) to denote unset criteria)
-    Tour qry0(3, "", make_shared <TourSpec> (TourSpec::IsInternational::YES,0.0,"","",""));
+    Tour qry0(3, "", make_shared <TourSpec> (TourSpec::IsInternational::YES,0.0,"","","",0));
     show( inv.find_item( qry0 ));
     
     // tests with different query values
-    Tour qry1(0, "Expedia", make_shared <TourSpec> (TourSpec::IsInternational::YES,0.0,"","",""));
+    Tour qry1(0, "Expedia", make_shared <TourSpec> (TourSpec::IsInternational::YES,0.0,"","","",0));
     show(inv.find_item( qry1 ));
     
     
     // tests for nonmatching object
-    Tour qry2(0, "RandomOrganisation", make_shared <TourSpec> (TourSpec::IsInternational::ANY,0.0,"Unkown","-.-.-","-.-.-"));
+    Tour qry2(0, "RandomOrganisation", make_shared <TourSpec> (TourSpec::IsInternational::ANY,0.0,"Unkown","-.-.-","-.-.-",0));
     show(inv.find_item( qry2 ));
     
     
@@ -144,6 +145,19 @@ int main ()
     Tour qry4(5, "", jordenTour);
     show(inv.find_item(qry4));
     show(inv.find_item(*jordenTour));
+    
+    cout << "\n\nAdding another TourSpec:" << endl;
+    auto budapest_tour {make_shared <TourSpec> (TourSpec::IsInternational::YES, 1359.99, "Budapest", "22.03.2021", "27.03.2021", 5) };
+    inv.add_item(6, "Expedia", budapest_tour);
+    assert( 6 == inv.get_count());
+    inv.add_item(7, "Go Travels", budapest_tour);
+    assert( 7 == inv.get_count());
+    show(inv.find_item(*budapest_tour));
+    Tour qry5(7,"",budapest_tour);
+    Tour qry6(0,"",budapest_tour);
+    show(inv.find_item(qry5));
+    show(inv.find_item(qry6));
+    
     
     return 0;
 }
